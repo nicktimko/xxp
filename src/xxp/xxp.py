@@ -8,7 +8,7 @@ TEXTABLE = set(string.punctuation + string.ascii_letters + string.digits + " ")
 
 def chunks(seq, n):
     for i in range(0, len(seq), n):
-        yield seq[i:i + n]
+        yield seq[i : i + n]
 
 
 def generate(bs, cols=16, uppercase=False, group=2):

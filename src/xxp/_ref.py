@@ -1,6 +1,9 @@
+"""
+Mostly for checking against the reference implementation, but why not offer
+it anyway...
+"""
+
 import argparse
-from ast import parse
-from statistics import mode
 import subprocess
 import sys
 

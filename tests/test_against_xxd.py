@@ -1,6 +1,6 @@
 import pathlib
 
-# import pytest
+import pytest
 
 from xxp._ref import xxd
 from xxp import format
@@ -15,8 +15,9 @@ def get_file_contents(name: str) -> bytes:
     return data
 
 
-def test_basic():
-    data = get_file_contents("0thru255")
+@pytest.mark.parametrize("source", ["0thru255", "justascii", "utf32"])
+def test_basic(source):
+    data = get_file_contents(source)
     ref_output = xxd(data)
     xxp_output = format(data)
 
