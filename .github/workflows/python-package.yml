@@ -17,6 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11.0-alpha.5"]
+        # python-version: ["3.10", "3.11.0-alpha.5"]  # preferred, but meh.
 
     steps:
     - uses: actions/checkout@v2
@@ -32,26 +33,26 @@ jobs:
         python -m pip install poetry flake8 pytest black
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Lint with flake8
+    - name: Lint (flake8)
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Style check
+    - name: Style check (Black)
       run: |
         black --check .
 
-    - name: Test with pytest
+    - name: Test (Pytest)
       run: |
         pytest
 
-    - name: Package
+    - name: Package distribution
       run: |
         poetry build
 
-    - name: pypi-publish
+    - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@v1.5.0
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
       with:
